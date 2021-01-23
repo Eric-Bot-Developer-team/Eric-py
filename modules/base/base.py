@@ -6,11 +6,11 @@ class base(commands.Cog):
         self.bot = bot
 
     @commands.command(name='self-destruct')
-    async def cool_bot(self, ctx):
+    async def self_destruct(self, ctx):
         await ctx.send('beep boop bop **explodes**')
 
     @commands.command(name='test')
-    async def cool_bot(self, ctx):
+    async def test(self, ctx):
         await ctx.send('Eric is alive.')
 
 def setup(bot):
