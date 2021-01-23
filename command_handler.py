@@ -2,35 +2,36 @@
 
 # imports
 import discord
+from discord.ext import commands
 import sys
 
 # import bot modules
 from modules.base.base import base
-from modules.music.music import music
+
+
+def get_prefix(bot, message):
+    prefixes = ['&', '#']
+
+    if not message.guild:
+        return '?'
+
+    return commands.when_mentioned_or(*prefixes)(bot, message)
+
+
+initial_extensions = ['modules.base.base']
+
+bot = commands.Bot(command_prefix=get_prefix, description='A Rewrite Cog Example')
 
 # handle commands
 if __name__ == '__main__':
-
     token = sys.argv[1]
-    prefix = "E"
-    print("Token" + token)
+    for extension in initial_extensions:
+        bot.load_extension(extension)
 
-    client = discord.Client()
-
-    @client.event
+    @bot.event
     async def on_ready():
-        print('Logged on as {0}!'.format(client.user))
-
-    @client.event
-    async def on_message(message: discord.Message):
-        if message.content[0] == prefix and message.author != client.user:
-            args = message.content[2::].split(' ')
-            module = args[0]
-            module_args = args[1:]
-            if(module == 'music'):
-                await music(client, message, module_args)
-            else:
-                await base(client, message, args)
+        print(f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
+        print(f'Successfully logged in and booted...!')
 
 
-    client.run(token)
+    bot.run(token, bot=True, reconnect=True)

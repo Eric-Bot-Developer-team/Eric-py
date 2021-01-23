@@ -1,13 +1,13 @@
 import discord
+from discord.ext import commands
 
-async def base(client: discord.Client, message: discord.Message, args):
-    subcommand = args[0]
+class base(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
 
-    if subcommand == 'test':
-        await send_text(message, 'Eric is alive!')
-    elif subcommand == 'self-destruct':
-        await send_text(message, 'Beep bop boop **explodes**')
+    @commands.command(name='self-destruct')
+    async def cool_bot(self, ctx):
+        await ctx.send('beep boop bop **explodes**')
 
-
-async def send_text(message: discord.Message, text):
-    await message.channel.send(text)
+def setup(bot):
+    bot.add_cog(base(bot))
