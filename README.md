@@ -28,3 +28,8 @@ Start with this code:
 add my_feature to the following list in command_handler:
 
     initial_extensions = [..., 'my_feature']
+    
+    
+### Creating local setup 
+install required packages
+    python3 -m pip install -r requirements.txt
