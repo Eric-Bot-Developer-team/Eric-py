@@ -1,12 +1,12 @@
 # Eric
 The Eric bot, a bot made by first year computer science students, that does basically everything.
 
-##Local testing
+### Local testing
 Make a bot add [Discord developer portal](https://discord.com/developer)
 
 Run command_handler with your bot token as first argument.
 
-##Starting new module
+### Starting new module
 Start a feature branch.  
 Make modules/my_feature/my_feature.py  
 Start with this code:  
