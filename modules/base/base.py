@@ -9,5 +9,9 @@ class base(commands.Cog):
     async def cool_bot(self, ctx):
         await ctx.send('beep boop bop **explodes**')
 
+    @commands.command(name='test')
+    async def cool_bot(self, ctx):
+        await ctx.send('Eric is alive.')
+
 def setup(bot):
     bot.add_cog(base(bot))

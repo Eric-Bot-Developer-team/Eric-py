@@ -5,15 +5,11 @@ import discord
 from discord.ext import commands
 import sys
 
-# import bot modules
-from modules.base.base import base
-
-
 def get_prefix(bot, message):
     prefixes = ['&', '#']
 
     if not message.guild:
-        return '?'
+        return '&'
 
     return commands.when_mentioned_or(*prefixes)(bot, message)
 
