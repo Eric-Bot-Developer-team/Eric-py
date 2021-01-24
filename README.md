@@ -1,11 +1,34 @@
 # Eric
 The Eric bot, a bot made by first year computer science students, that does basically everything.
 
-### Local testing
-Make a bot add [Discord developer portal](https://discord.com/developer)
+## Current modules
 
-Run command_handler with your bot token as first argument.
-You can do this in Pycharm in configs in the right top corner.
+| Module        | Description           
+| ------------- |-------------
+| base          | The basics 
+| music         | Simple youtube bot      
+
+### Modules planned add:   
+
+| Module        | Description           
+| ------------- |-------------
+| admin         | Administration 
+| dank          | Memes and stuff 
+
+## How to contribute
+
+### Creating local setup 
+clone
+install required packages
+    
+    python3 -m pip install -r requirements.txt
+    
+    
+### Local testing
+Make a bot at [Discord developer portal](https://discord.com/developer) and invite it to a test guild.
+
+Run command_handler with your bot token as first argument.  
+You can do this in Pycharm in configs in the right top corner:.
 
 ![pycharm](https://i.imgur.com/zGoLQ2D.png)
 
@@ -32,7 +55,4 @@ add my_feature to the following list in command_handler:
 
     initial_extensions = [..., 'my_feature']
     
-### Creating local setup 
-install required packages
-    
-    python3 -m pip install -r requirements.txt
+
