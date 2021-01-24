@@ -14,17 +14,7 @@ ydl_opts = {
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
         'preferredquality': '192',
-    }],
-    'ffmpeg_location': './ffmpeg/windows/bin/ffmpeg.exe'
-} if os.name == 'nt' else {
-    'format': 'bestaudio/best',
-    'postprocessors': [{
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
-        'preferredquality': '192',
-    }],
-    'ffmpeg_location': 'linux here'
-}
+    }]}
 
 class music(commands.Cog):
     def __init__(self, bot: discord.Client):
@@ -157,7 +147,7 @@ class Player():
 
             playlist.pop(0)
 
-            ctx.voice_client.play(discord.FFmpegPCMAudio(path, executable=ydl_opts['ffmpeg_location']))
+            ctx.voice_client.play(discord.FFmpegPCMAudio(path))
             ctx.voice_client.source = discord.PCMVolumeTransformer(ctx.voice_client.source, 1)
             while ctx.voice_client.is_playing() or ctx.voice_client.is_paused():
                 await asyncio.sleep(0.1)
