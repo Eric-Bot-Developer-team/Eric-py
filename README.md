@@ -7,7 +7,7 @@ Make a bot add [Discord developer portal](https://discord.com/developer)
 Run command_handler with your bot token as first argument.
 You can do this in Pycharm in configs in the right top corner.
 
-!(pycharm config)[https://imgur.com/zGoLQ2D]
+![pycharm](https://i.imgur.com/zGoLQ2D.png)
 
 ### Starting new module
 Start a feature branch.  
