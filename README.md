@@ -5,6 +5,8 @@ The Eric bot, a bot made by first year computer science students, that does basi
 Make a bot add [Discord developer portal](https://discord.com/developer)
 
 Run command_handler with your bot token as first argument.
+You can do this in Pycharm in configs in the right top corner.
+!(pycharm config)[https://imgur.com/zGoLQ2D]
 
 ### Starting new module
 Start a feature branch.  
@@ -28,7 +30,6 @@ Start with this code:
 add my_feature to the following list in command_handler:
 
     initial_extensions = [..., 'my_feature']
-    
     
 ### Creating local setup 
 install required packages
