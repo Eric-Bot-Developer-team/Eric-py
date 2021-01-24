@@ -27,7 +27,7 @@ Start with this code:
 
     def setup(bot):
         bot.add_cog(my_feature(bot))
-
+(write your code in  class my_feature)
 add my_feature to the following list in command_handler:
 
     initial_extensions = [..., 'my_feature']
