@@ -9,7 +9,7 @@ from discord.ext import commands
 from youtube_search import YoutubeSearch
 
 ydl_opts = {
-    'format': 'bestaudio/best',
+    'format': 'worstaudio/worst',
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
