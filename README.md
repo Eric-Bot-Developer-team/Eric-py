@@ -19,7 +19,7 @@ The Eric bot, a bot made by first year computer science students, that does basi
 
 ### Creating local setup 
 clone    
--install ffmpeg   
+-install ffmpeg (if testing music module)   
 -install required packages
     
     python3 -m pip install -r requirements.txt
