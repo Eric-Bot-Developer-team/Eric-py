@@ -6,7 +6,7 @@ from discord.ext import commands
 import sys
 
 def get_prefix(bot, message):
-    prefixes = ['&', '#']
+    prefixes = ['&', '#', 'E ', '& ', 'E']
 
     if not message.guild:
         return '&'
@@ -14,7 +14,7 @@ def get_prefix(bot, message):
     return commands.when_mentioned_or(*prefixes)(bot, message)
 
 
-initial_extensions = ['modules.base.base']
+initial_extensions = ['modules.base.base', 'modules.music.music']
 
 bot = commands.Bot(command_prefix=get_prefix, description='A Rewrite Cog Example')
 
