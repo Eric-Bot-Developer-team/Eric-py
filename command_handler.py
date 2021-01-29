@@ -14,7 +14,10 @@ def get_prefix(bot, message):
     return commands.when_mentioned_or(*prefixes)(bot, message)
 
 
-initial_extensions = ['modules.base.base', 'modules.music.music']
+initial_extensions = ['modules.base.base',
+                      'modules.music.music',
+                      'modules.game.discord_layer.game',
+                      'modules.game.logic_layer.connect4_logic']
 
 bot = commands.Bot(command_prefix=get_prefix, description='A Rewrite Cog Example')
 
