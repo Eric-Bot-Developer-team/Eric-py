@@ -23,7 +23,6 @@ class games(commands.Cog):
     async def timeout(self):
         await self.bot.wait_until_ready()
         to_delete = []
-        print(connect4games)
         for key, value in connect4games.items():
             if time() - value.time > 120:
                 to_delete.append(key)
