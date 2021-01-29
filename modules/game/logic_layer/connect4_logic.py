@@ -19,7 +19,7 @@ class connect4logic(commands.Cog):
             game = connect4games[channel]
             game.reset_time()
 
-            if game.player2.name is None and move is None and author != game.player1.name:
+            if game.player2.name is None and author != game.player1.name:
                 game.player2.name = author
                 message = f"\n{game.return_grid()}\n{game.player1.name}'s turn\n"
 
