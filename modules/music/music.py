@@ -87,11 +87,15 @@ class Player():
         self.playlist = []
         self.playing = False
         self.easy_embed = easy_embed
+        self.channel = ctx.message.author.voice.channel
 
     @staticmethod
     def get_or_start_player(ctx, easy_embed):
         for i in Player.players:
             if i.guild_id == ctx.guild.id:
+                i.ctx = ctx
+                if not i.channel:
+                    i.channel = ctx.message.author.voice.channel
                 return i
         else:
             return Player(ctx, easy_embed)
@@ -99,7 +103,8 @@ class Player():
     async def play(self):
         if not self.playing:
             self.playing = True
-            await self.play_next_song()
+            self.play_next_song()
+            print("test")
 
     async def resume(self):
         if not self.playing:
@@ -127,7 +132,7 @@ class Player():
         print(song)
         if song.valid:
             self.playlist.append(song)
-            await self.easy_embed.simple_message("Added:" + song.get_short_title(), self.ctx)
+            await self.easy_embed.simple_message("Added: " + song.get_short_title(), self.ctx)
         else:
             await self.easy_embed.simple_message("Song not found", self.ctx)
 
@@ -138,26 +143,21 @@ class Player():
             await self.easy_embed.simple_message("Playing: " + playlist[0].get_short_title(), self.ctx,
                                                  image_url=playlist[0].get_image_url())
             song = playlist[0].get_full_url()
-            channel = ctx.message.author.voice.channel
 
             if ctx.voice_client is None:
-                vc = await channel.connect()
-            path = './music/' + str(ctx.message.guild.id) + '.mp3'
+                vc = await self.channel.connect()
 
-            if os.path.exists(path):
-                os.remove(path)
-
-            ydl_opts['outtmpl'] = path
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                file = ydl.extract_info(song, download=True)
+                info = ydl.extract_info(song, download=False)
+                URL = info['formats'][0]['url']
 
             playlist.pop(0)
 
-            ctx.voice_client.play(discord.FFmpegPCMAudio(path))
+            ctx.voice_client.play(discord.FFmpegPCMAudio(URL))
             ctx.voice_client.source = discord.PCMVolumeTransformer(ctx.voice_client.source, 1)
             while ctx.voice_client.is_playing() or ctx.voice_client.is_paused():
                 await asyncio.sleep(0.1)
-            await self.play_next_song()
+            self.play_next_song()
 
         else:
             if ctx.voice_client:
@@ -168,13 +168,13 @@ class Player():
         ctx = self.ctx
         playlist = self.playlist
         if len(playlist) > 0:
-            embed = discord.Embed(title="Current playlist:", colour=0x7289da)
+            embed = discord.Embed(title="Current playlist: ", colour=0x7289da)
             songlist = ""
             for i in playlist:
                 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                     video_title = i.get_short_title()
                     songlist += "- " + video_title + "\n"
-            embed.add_field(name="Songs:", value=songlist, inline=False)
+            embed.add_field(name="Songs: ", value=songlist, inline=False)
             await ctx.send(embed=embed)
         else:
             await self.easy_embed.simple_message("No songs in playlist!", self.ctx)

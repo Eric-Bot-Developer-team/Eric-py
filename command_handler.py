@@ -28,9 +28,8 @@ if __name__ == '__main__':
 
     bot.settings = Settings()
 
-    bot.easy_embed = EasyEmbed(bot.settings)
+    bot.easy_embed = EasyEmbed(bot)
 
-    token = sys.argv[1]
     for extension in initial_extensions:
         bot.load_extension(extension)
 
@@ -41,4 +40,4 @@ if __name__ == '__main__':
         print(f'Successfully logged in and booted...!')
 
 
-    bot.run(token, bot=True, reconnect=True)
+    bot.run(bot.settings.values.token, bot=True, reconnect=True)
