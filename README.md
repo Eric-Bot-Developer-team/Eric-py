@@ -17,10 +17,9 @@ The Eric bot, a bot made by first year computer science students, that does basi
 
 ## How to contribute
 
-### Creating local setup 
-clone    
--install ffmpeg (if testing music module)   
--install required packages
+### Creating local setup  
+-install ffmpeg (if using music module)   
+-install required packages with:
     
     python3 -m pip install -r requirements.txt
     
@@ -28,14 +27,12 @@ clone
 ### Local testing
 Make a bot at [Discord developer portal](https://discord.com/developer) and invite it to a test guild.
 
-Run command_handler with your bot token as first argument.  
-You can do this in Pycharm in configs in the right top corner:.
-
-![pycharm](https://i.imgur.com/zGoLQ2D.png)
+- Place bot token in config.json
+- Run command_handler
 
 ### Starting new module
 Start a feature branch.  
-Make modules/my_feature/my_feature.py  
+Make modules/my_module/my_module.py  
 Start with this code:  
 
     import discord
@@ -45,7 +42,7 @@ Start with this code:
         def __init__(self, bot):
             self.bot = bot
     
-        @commands.command(name='my_command')
+        @commands.command(name='my_module')
         async def cool_bot(self, ctx):
             await ctx.send('My command works')
 
