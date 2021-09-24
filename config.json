@@ -1,3 +1,6 @@
 {
-  "token": "PLACE TOKEN HERE"
+  "token": "PLACE TOKEN HERE",
+  "style": {
+    "color": [114, 137, 218]
+  }
 }

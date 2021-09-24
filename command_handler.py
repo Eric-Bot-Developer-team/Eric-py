@@ -5,6 +5,10 @@ import discord
 from discord.ext import commands
 import sys
 
+from util.easyembed import EasyEmbed
+from util.settings_builder import Settings
+
+
 def get_prefix(bot, message):
     prefixes = ['&', '#', 'E ', '& ', 'E']
 
@@ -18,11 +22,18 @@ initial_extensions = ['modules.base.base', 'modules.music.music']
 
 bot = commands.Bot(command_prefix=get_prefix, description='A Rewrite Cog Example')
 
+
 # handle commands
 if __name__ == '__main__':
+
+    bot.settings = Settings()
+
+    bot.easy_embed = EasyEmbed(bot.settings)
+
     token = sys.argv[1]
     for extension in initial_extensions:
         bot.load_extension(extension)
+
 
     @bot.event
     async def on_ready():

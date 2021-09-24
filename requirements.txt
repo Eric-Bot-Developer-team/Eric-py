@@ -1,3 +1,4 @@
 discord~=1.0.1
 youtube_dl
 youtube_search
+python_json_config==1.2.3

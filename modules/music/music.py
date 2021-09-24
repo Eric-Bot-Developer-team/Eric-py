@@ -1,8 +1,6 @@
 import os
 import asyncio
 
-from util import easy_embed
-
 import discord
 import youtube_dl
 from discord.ext import commands
@@ -16,9 +14,11 @@ ydl_opts = {
         'preferredquality': '192',
     }]}
 
+
 class music(commands.Cog):
     def __init__(self, bot: discord.Client):
         self.bot = bot
+        self.easy_embed = self.bot.easy_embed
 
     @commands.group(name="music", invoke_without_command=True)
     async def music(self, ctx):
@@ -26,32 +26,34 @@ class music(commands.Cog):
 
     @music.command(name='play')
     async def play(self, ctx: discord.ext.commands.Context, *args):
-        player = Player.get_or_start_player(ctx)
+        player = Player.get_or_start_player(ctx, self.easy_embed)
         await player.add_song(' '.join(args))
         await player.play()
 
     @music.command(name='playlist')
     async def play_list(self, ctx: discord.ext.commands.Context):
-        await Player.get_or_start_player(ctx).print_playlist()
+        await Player.get_or_start_player(ctx, self.easy_embed).print_playlist()
 
     @music.command(name='skip')
     async def skip(self, ctx: discord.ext.commands.Context):
-        await Player.get_or_start_player(ctx).skip()
+        await Player.get_or_start_player(ctx, self.easy_embed).skip()
 
     @music.command(name='pause')
     async def pause(self, ctx: discord.ext.commands.Context):
-        await Player.get_or_start_player(ctx).pause()
+        await Player.get_or_start_player(ctx, self.easy_embed).pause()
 
     @music.command(name='resume')
     async def resume(self, ctx: discord.ext.commands.Context):
-        await Player.get_or_start_player(ctx).resume()
+        await Player.get_or_start_player(ctx, self.easy_embed).resume()
 
     @music.command(name='clear')
     async def stop(self, ctx: discord.ext.commands.Context):
-        await Player.get_or_start_player(ctx).clear()
+        await Player.get_or_start_player(ctx, self.easy_embed).clear()
+
 
 def setup(bot):
     bot.add_cog(music(bot))
+
 
 class Song():
     def __init__(self, keyword, ctx):
@@ -67,29 +69,32 @@ class Song():
         return "https://youtube.com/" + self.infodict['url_suffix']
 
     def get_short_title(self):
-        short_title = self.infodict['title'][:45] + "..." if len(self.infodict['title']) > 50 else self.infodict['title']
+        short_title = self.infodict['title'][:45] + "..." if len(self.infodict['title']) > 50 else self.infodict[
+            'title']
         return short_title
 
     def get_image_url(self):
         return self.infodict['thumbnails'][0]
 
+
 class Player():
     players = []
 
-    def __init__(self, ctx):
+    def __init__(self, ctx, easy_embed):
         self.ctx = ctx
         Player.players.append(self)
         self.guild_id = ctx.guild.id
         self.playlist = []
         self.playing = False
+        self.easy_embed = easy_embed
 
     @staticmethod
-    def get_or_start_player(ctx):
+    def get_or_start_player(ctx, easy_embed):
         for i in Player.players:
             if i.guild_id == ctx.guild.id:
                 return i
         else:
-            return Player(ctx)
+            return Player(ctx, easy_embed)
 
     async def play(self):
         if not self.playing:
@@ -100,13 +105,13 @@ class Player():
         if not self.playing:
             self.playing = True
             self.ctx.voice_client.resume()
-            await easy_embed.simple_message("Playlist resumed", self.ctx)
+            await self.easy_embed.simple_message("Playlist resumed", self.ctx)
 
     async def pause(self):
         if self.playing:
             self.playing = False
             self.ctx.voice_client.pause()
-            await easy_embed.simple_message("Playlist paused", self.ctx)
+            await self.easy_embed.simple_message("Playlist paused", self.ctx)
 
     def stop(self):
         self.playing = False
@@ -115,22 +120,23 @@ class Player():
     async def clear(self):
         self.stop()
         self.playlist = []
-        await easy_embed.simple_message("Playlist cleared", self.ctx)
+        await self.easy_embed.simple_message("Playlist cleared", self.ctx)
 
     async def add_song(self, keyword):
         song = Song(keyword, self.ctx)
         print(song)
         if song.valid:
             self.playlist.append(song)
-            await easy_embed.simple_message("Added:" + song.get_short_title(), self.ctx)
+            await self.easy_embed.simple_message("Added:" + song.get_short_title(), self.ctx)
         else:
-            await easy_embed.simple_message("Song not found", self.ctx)
+            await self.easy_embed.simple_message("Song not found", self.ctx)
 
     async def play_next_song(self):
         playlist = self.playlist
         ctx = self.ctx
         if len(playlist) > 0:
-            await easy_embed.simple_message("Playing: " + playlist[0].get_short_title(), self.ctx, image_url=playlist[0].get_image_url())
+            await self.easy_embed.simple_message("Playing: " + playlist[0].get_short_title(), self.ctx,
+                                                 image_url=playlist[0].get_image_url())
             song = playlist[0].get_full_url()
             channel = ctx.message.author.voice.channel
 
@@ -171,9 +177,9 @@ class Player():
             embed.add_field(name="Songs:", value=songlist, inline=False)
             await ctx.send(embed=embed)
         else:
-            await easy_embed.simple_message("No songs in playlist!", self.ctx)
+            await self.easy_embed.simple_message("No songs in playlist!", self.ctx)
 
     async def skip(self):
         if self.ctx.voice_client:
             self.ctx.voice_client.stop()
-            await easy_embed.simple_message("Song skipped!", self.ctx)
+            await self.easy_embed.simple_message("Song skipped!", self.ctx)
