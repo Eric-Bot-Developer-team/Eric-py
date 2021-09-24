@@ -1,7 +1,7 @@
 import os
 import asyncio
 
-import easy_embed
+from util import easy_embed
 
 import discord
 import youtube_dl
