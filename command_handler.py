@@ -4,6 +4,7 @@
 import discord
 from discord.ext import commands
 import sys
+import os
 
 from util.easyembed import EasyEmbed
 from util.settings_builder import Settings
@@ -40,4 +41,4 @@ if __name__ == '__main__':
         print(f'Successfully logged in and booted...!')
 
 
-    bot.run(bot.settings.values.token, bot=True, reconnect=True)
+    bot.run(os.environ['TOKEN'], bot=True, reconnect=True)
