@@ -10,6 +10,7 @@ The Eric bot, a bot made by first year computer science students, that does basi
 | base          | The basics 
 | music         | Simple youtube bot
 | dank          | Memes and stuff 
+| game          | Games
 
 ### Modules planned add:   
 
