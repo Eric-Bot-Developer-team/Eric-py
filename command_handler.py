@@ -5,6 +5,7 @@ import discord
 from discord.ext import commands
 import sys
 
+
 def get_prefix(bot, message):
     prefixes = ['&', '#', 'E ', '& ', 'E']
 
@@ -14,10 +15,9 @@ def get_prefix(bot, message):
     return commands.when_mentioned_or(*prefixes)(bot, message)
 
 
-initial_extensions = ['modules.base.base',
-                      'modules.music.music',
-                      'modules.game.discord_layer.game',
-                      'modules.game.logic_layer.connect4_logic']
+initial_extensions = ['modules.base.base',  # base module
+                      'modules.music.music',  # music module
+                      'modules.game.discord_layer.game']  # game module
 
 bot = commands.Bot(command_prefix=get_prefix, description='A Rewrite Cog Example')
 
@@ -26,6 +26,7 @@ if __name__ == '__main__':
     token = sys.argv[1]
     for extension in initial_extensions:
         bot.load_extension(extension)
+
 
     @bot.event
     async def on_ready():

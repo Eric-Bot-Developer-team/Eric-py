@@ -3,9 +3,8 @@ from discord.ext import tasks, commands
 
 connect4games = {}
 
-class connect4logic(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
+
+class Connect4Logic:
 
     @staticmethod
     async def connect4logic(author, channel, move=None):
@@ -50,4 +49,4 @@ class connect4logic(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(connect4logic(bot))
+    bot.add_cog(Connect4Logic(bot))
