@@ -8,14 +8,14 @@ The Eric bot, a bot made by first year computer science students, that does basi
 | Module        | Description           
 | ------------- |-------------
 | base          | The basics 
-| music         | Simple youtube bot      
+| music         | Simple youtube bot
+| dank          | Memes and stuff 
 
 ### Modules planned add:   
 
 | Module        | Description           
 | ------------- |-------------
-| admin         | Administration 
-| dank          | Memes and stuff 
+| admin         | Administration
 
 ## How to contribute
 

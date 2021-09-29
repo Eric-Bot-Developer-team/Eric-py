@@ -15,7 +15,7 @@ ydl_opts = {
     }]}
 
 
-class music(commands.Cog):
+class Music(commands.Cog):
     def __init__(self, bot: discord.Client):
         self.bot = bot
         self.easy_embed = self.bot.easy_embed
@@ -52,7 +52,7 @@ class music(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(music(bot))
+    bot.add_cog(Music(bot))
 
 
 class Song():
