@@ -1,4 +1,4 @@
-
+![](https://github.com/Eric-Bot-Developer-team/Eric-py/blob/main/logo.png?raw=true)
 
 # Eric
 The Eric bot, a bot made by first year computer science students, that does basically everything.
