@@ -1,10 +1,9 @@
 # This file handles any commands and sends them to the different modules.
 
-# imports
 import discord
 from discord.ext import commands
-import sys
 import os
+from dotenv import load_dotenv
 
 from util.easyembed import EasyEmbed
 from util.settings_builder import Settings
@@ -40,5 +39,5 @@ if __name__ == '__main__':
         print(f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
         print(f'Successfully logged in and booted...!')
 
-
+    load_dotenv()
     bot.run(os.environ['TOKEN'], bot=True, reconnect=True)

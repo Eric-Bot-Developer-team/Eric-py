@@ -1,3 +1,5 @@
+
+
 # Eric
 The Eric bot, a bot made by first year computer science students, that does basically everything.
 
@@ -26,8 +28,7 @@ The Eric bot, a bot made by first year computer science students, that does basi
     
 ### Local testing
 Make a bot at [Discord developer portal](https://discord.com/developer) and invite it to a test guild.
-
-- Place bot `TOKEN=your_token` in .env
+- Creat an environment variable `TOKEN=your_bot_token`
 - Run command_handler
 
 ### Starting new module
