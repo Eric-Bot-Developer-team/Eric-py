@@ -7,32 +7,30 @@ import json
 from discord.ext import commands
 
 # Ip-address of the server you want to track
-ip = "axel.lorreyne.be"
+ip = "informaticautisme.com"
 
 
-# This method uses the api of mcsrvstat to get the information of the server and returns the total of online players
-def get_online():
-    respone = urlopen(f'https://api.mcsrvstat.us/2/{ip}')
-
-    data = json.loads(respone.read())
-
-    return int(data['players']['online'])
+# This method uses the api of mcsrvstat to get the information of the server and returns this info in a json object
+def get_server_data():
+    response = urlopen(f'https://api.mcsrvstat.us/2/{ip}')
+    return json.loads(response.read())
 
 
 class Minecraft(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.easy_embed = self.bot.easy_embed
 
     @commands.group(name="mc", invoke_without_command=False)
     async def minecraft(self, ctx):
         pass
 
-    # Command
+    # Command to check how many players are online
     @minecraft.command(name='online')
     async def online(self, ctx):
         # Get the current total of players that are online
-        total_players = get_online()
+        total_players = int(get_server_data()['players']['online'])
 
         # Checking the value of total_players to make a correct response
         if total_players == 0:
@@ -44,6 +42,18 @@ class Minecraft(commands.Cog):
 
         # Send result
         await ctx.send(f"There {response_string} online on the minecraft server.")
+
+    # Command to see who is online
+    @minecraft.command(name='who')
+    async def who(self, ctx):
+        # Get list of players who are online
+        data = get_server_data()
+        list_of_players = data['players']['list']
+        # get servername
+        servername = data['hostname']
+        # Returned embed message with servername and player(s) on different lines
+        await self.easy_embed.simple_message(f'Player(s) online on "{servername}"\n\n' +
+                                             "\n".join(sorted(list_of_players)), ctx)
 
 
 def setup(bot):
