@@ -11,7 +11,7 @@ The Eric bot, a bot made by first year computer science students, that does basi
 | music         | Simple youtube bot
 | dank          | Memes and stuff 
 | game          | Games
-| minecraft     | Minecraf commands
+| minecraft     | Minecraft commands
 
 ### Modules planned add:   
 
@@ -35,25 +35,25 @@ Make a bot at [Discord developer portal](https://discord.com/developer) and invi
 
 ### Starting new module
 Start a feature branch.  
-Make modules/my_module/my_module.py  
+Make modules/pingpong/pingpong.py  
 Start with this code:  
 
     import discord
     from discord.ext import commands
 
-    class my_feature(commands.Cog):
+    class PingPong(commands.Cog):
         def __init__(self, bot):
             self.bot = bot
     
-        @commands.command(name='my_module')
-        async def cool_bot(self, ctx):
-            await ctx.send('My command works')
+        @commands.command(name='ping')
+        async def ping(self, ctx):
+            await ctx.send('pong')
 
     def setup(bot):
         bot.add_cog(my_feature(bot))
 (write your code in  class my_feature)
 add my_feature to the following list in command_handler:
 
-    initial_extensions = [..., 'my_feature']
+    initial_extensions = [..., 'pingpong.pingpong']
     
 

@@ -1,9 +1,9 @@
 # List of imports
 # urlopen and json are imports that are used to read the api-value's
-from urllib.request import urlopen
 import json
 
 # Standard import for discord command
+import requests
 from discord.ext import commands
 
 # Ip-address of the server you want to track
@@ -12,8 +12,9 @@ ip = "informaticautisme.com"
 
 # This method uses the api of mcsrvstat to get the information of the server and returns this info in a json object
 def get_server_data():
-    response = urlopen(f'https://api.mcsrvstat.us/2/{ip}')
-    return json.loads(response.read())
+    #this should be fixed to verify=True
+    response = requests.get(f'https://api.mcsrvstat.us/2/{ip}', verify=False)
+    return json.loads(response.text)
 
 
 class Minecraft(commands.Cog):
@@ -52,8 +53,8 @@ class Minecraft(commands.Cog):
         # get servername
         servername = data['hostname']
         # Returned embed message with servername and player(s) on different lines
-        await self.easy_embed.simple_message(f'Player(s) online on "{servername}"\n\n' +
-                                             "\n".join(sorted(list_of_players)), ctx)
+        await self.easy_embed.simple_message(f'Player(s) online on "{servername}"\n\n', ctx,
+                                             description="\n".join(sorted(list_of_players)))
 
 
 def setup(bot):
