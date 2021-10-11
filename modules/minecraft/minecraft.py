@@ -24,8 +24,12 @@ class Minecraft(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.group(name="mc", invoke_without_command=False)
+    async def minecraft(self, ctx):
+        pass
+
     # Command
-    @commands.command(name='online')
+    @minecraft.command(name='online')
     async def online(self, ctx):
         # Get the current total of players that are online
         total_players = get_online()
@@ -39,7 +43,7 @@ class Minecraft(commands.Cog):
             response_string = f"are {total_players} players"
 
         # Send result
-        await ctx.send(f"There {response_string} online on the minecraft server")
+        await ctx.send(f"There {response_string} online on the minecraft server.")
 
 
 def setup(bot):

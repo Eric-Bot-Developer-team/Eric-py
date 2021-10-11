@@ -11,6 +11,7 @@ The Eric bot, a bot made by first year computer science students, that does basi
 | music         | Simple youtube bot
 | dank          | Memes and stuff 
 | game          | Games
+| minecraft     | Minecraf commands
 
 ### Modules planned add:   
 
