@@ -19,14 +19,14 @@ def get_online():
     return int(data['players']['online'])
 
 
-class Online(commands.Cog):
+class Minecraft(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
 
     # Command
     @commands.command(name='online')
-    async def cool_bot(self, ctx):
+    async def online(self, ctx):
         # Get the current total of players that are online
         total_players = get_online()
 
@@ -43,4 +43,4 @@ class Online(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(Online(bot))
+    bot.add_cog(Minecraft(bot))

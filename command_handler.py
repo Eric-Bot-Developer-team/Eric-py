@@ -20,7 +20,7 @@ def get_prefix(bot, message):
 
 initial_extensions = ['modules.base.base', 'modules.music.music', 'modules.dank.dank',
                       'modules.game.discord_layer.game',
-                      'modules.minecraftserver.online']
+                      'modules.minecraft.minecraft']
 
 bot = commands.Bot(command_prefix=get_prefix, description='A Rewrite Cog Example')
 
