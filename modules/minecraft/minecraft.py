@@ -7,14 +7,12 @@ import requests
 from discord.ext import commands
 
 # Ip-address of the server you want to track
+from mcstatus import MinecraftServer
+
 ip = "informaticautisme.com"
+port = 25565
 
-
-# This method uses the api of mcsrvstat to get the information of the server and returns this info in a json object
-def get_server_data():
-    #this should be fixed to verify=True
-    response = requests.get(f'https://api.mcsrvstat.us/2/{ip}', verify=False)
-    return json.loads(response.text)
+server = MinecraftServer(ip, port)
 
 
 class Minecraft(commands.Cog):
@@ -31,7 +29,7 @@ class Minecraft(commands.Cog):
     @minecraft.command(name='online')
     async def online(self, ctx):
         # Get the current total of players that are online
-        total_players = int(get_server_data()['players']['online'])
+        total_players = server.status().players.online
 
         # Checking the value of total_players to make a correct response
         if total_players == 0:
@@ -42,18 +40,16 @@ class Minecraft(commands.Cog):
             response_string = f"are {total_players} players"
 
         # Send result
-        await ctx.send(f"There {response_string} online on the minecraft server.")
+        await self.easy_embed.simple_message(f"There {response_string} online on the minecraft server.", ctx)
 
     # Command to see who is online
     @minecraft.command(name='who')
     async def who(self, ctx):
         # Get list of players who are online
-        data = get_server_data()
-        list_of_players = data['players']['list']
-        # get servername
-        servername = data['hostname']
+        list_of_players = [i['name'] for i in server.status().raw['players']['sample']]
+
         # Returned embed message with servername and player(s) on different lines
-        await self.easy_embed.simple_message(f'Player(s) online on "{servername}"\n\n', ctx,
+        await self.easy_embed.simple_message(f'Player(s) online on "{ip}"\n\n', ctx,
                                              description="\n".join(sorted(list_of_players)))
 
 

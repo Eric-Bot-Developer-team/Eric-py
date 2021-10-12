@@ -4,3 +4,4 @@ youtube_search
 python_json_config==1.2.3
 python-dotenv==0.19.0
 requests~=2.26.0
+mcstatus~=6.5.0
