@@ -15,8 +15,8 @@ class Dank(commands.Cog):
     async def pp(self, ctx):
         adjectives = json.loads(requests.get("https://random-word-form.herokuapp.com/random/adjective?count=3").text)
 
-        await ctx.send(f'You have a {", ".join(adjectives)} cock!\n'
-                       f'8{"=" * random.randrange(10)}D')
+        await self.bot.easy_embed.simple_message(f'8{"=" * random.randrange(10)}D', ctx,
+                                                 description=f'You have a {", ".join(adjectives)} cock!\n')
 
     @commands.command(name='doge')
     async def doge(self, ctx, *args):

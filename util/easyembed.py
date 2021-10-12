@@ -9,7 +9,7 @@ class EasyEmbed:
         self.bot = bot
 
     async def simple_message(self, content, channel, image_url='', description=''):
-        """Send an embed with an optional imagen, takes a ctx or a channel id as channel parameter."""
+        """Send an embed with an optional image, takes a ctx or a channel id as channel parameter."""
 
         if not isinstance(channel, discord.ext.commands.Context):
             channel = self.bot.get_channel(int(channel))
