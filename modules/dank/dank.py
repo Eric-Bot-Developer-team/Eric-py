@@ -2,7 +2,7 @@ import json
 import random
 from urllib.parse import quote_plus
 
-import praw
+import asyncpraw
 import requests
 from discord.ext import commands
 
@@ -10,7 +10,7 @@ from discord.ext import commands
 class Dank(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.reddit = praw.Reddit(client_id='vyMX9N2zNJds-GgIDktADg',
+        self.reddit = asyncpraw.Reddit(client_id='vyMX9N2zNJds-GgIDktADg',
                              client_secret='R5IQUYXKssyWfvFrzG9jVuVfkTGMMA',
                              user_agent='windows:com.renevds.eric:1.0.0 (by u/renevds)')
 
@@ -32,12 +32,23 @@ class Dank(commands.Cog):
 
     @commands.command()
     async def meme(self, ctx):
-        memes_submissions = self.reddit.subreddit('EdgyMemestwo').hot()
-        post_to_pick = random.randint(1, 50)
-        for i in range(0, post_to_pick):
-            submission = next(x for x in memes_submissions if not x.stickied)
+        subreddit = await self.reddit.subreddit('memes')
 
-        await ctx.send(submission.url)
+        all_subs = ['memes']
+
+        top = subreddit.top(limit=100)  # bot will choose between the top 250 memes
+
+        async for submission in top:
+            all_subs.append(submission)
+
+        random_sub = random.choice(all_subs)
+        url = random_sub.url
+
+        while not '.jpg' in url or '.png' in url:
+            random_sub = random.choice(all_subs)
+            url = random_sub.url
+
+        await ctx.send(url)
 
 
 def setup(bot):
