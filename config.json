@@ -1,5 +1,9 @@
 {
   "style": {
-    "color": [114, 137, 218]
+    "color": [88, 101, 242]
+  },
+  "minecraft": {
+    "ip": "informaticautisme.com",
+    "port": 25565
   }
 }

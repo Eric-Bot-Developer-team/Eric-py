@@ -13,16 +13,13 @@ class Settings:
 
     def __init__(self):
         # create config parser
-        builder = ConfigBuilder()
+        self.builder = ConfigBuilder()
 
         # parse config
-        self.values = builder.parse_config(SETTINGS_FILE)
-
-        # check if token is in settings
-        builder.validate_field_type('token', str)
+        self.values = self.builder.parse_config(SETTINGS_FILE)
 
         # check if valid color
-        builder.validate_field_value('style.color',
+        self.builder.validate_field_value('style.color',
                                      lambda color: len(color) == 3 and all(isinstance(x, int) for x in color))
 
     def save(self):

@@ -7,14 +7,7 @@ import requests
 from discord.ext import commands
 
 # Ip-address of the server you want to track
-ip = "informaticautisme.com"
-
-
-# This method uses the api of mcsrvstat to get the information of the server and returns this info in a json object
-def get_server_data():
-    #this should be fixed to verify=True
-    response = requests.get(f'https://api.mcsrvstat.us/2/{ip}', verify=False)
-    return json.loads(response.text)
+from mcstatus import MinecraftServer
 
 
 class Minecraft(commands.Cog):
@@ -22,6 +15,18 @@ class Minecraft(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.easy_embed = self.bot.easy_embed
+
+        settings = self.bot.settings
+
+        # check if ip and port in settings
+        self.ip = settings.values.minecraft.ip
+        self.port = settings.values.minecraft.port
+
+        assert self.ip, "ip not in settings"
+        assert self.port, "port not in settings"
+
+        # create server object
+        self.server = MinecraftServer(self.ip, self.port)
 
     @commands.group(name="mc", invoke_without_command=False)
     async def minecraft(self, ctx):
@@ -31,7 +36,7 @@ class Minecraft(commands.Cog):
     @minecraft.command(name='online')
     async def online(self, ctx):
         # Get the current total of players that are online
-        total_players = int(get_server_data()['players']['online'])
+        total_players = self.server.status().players.online
 
         # Checking the value of total_players to make a correct response
         if total_players == 0:
@@ -42,18 +47,16 @@ class Minecraft(commands.Cog):
             response_string = f"are {total_players} players"
 
         # Send result
-        await ctx.send(f"There {response_string} online on the minecraft server.")
+        await self.easy_embed.simple_message(f"There {response_string} online on {self.ip}.", ctx)
 
     # Command to see who is online
     @minecraft.command(name='who')
     async def who(self, ctx):
         # Get list of players who are online
-        data = get_server_data()
-        list_of_players = data['players']['list']
-        # get servername
-        servername = data['hostname']
+        list_of_players = [i['name'] for i in self.server.status().raw['players']['sample']]
+
         # Returned embed message with servername and player(s) on different lines
-        await self.easy_embed.simple_message(f'Player(s) online on "{servername}"\n\n', ctx,
+        await self.easy_embed.simple_message(f'Player(s) online on "{self.ip}"\n\n', ctx,
                                              description="\n".join(sorted(list_of_players)))
 
 
