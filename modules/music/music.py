@@ -103,7 +103,7 @@ class Player():
     async def play(self):
         if not self.playing:
             self.playing = True
-            self.play_next_song()
+            await self.play_next_song()
             print("test")
 
     async def resume(self):
@@ -157,7 +157,7 @@ class Player():
             ctx.voice_client.source = discord.PCMVolumeTransformer(ctx.voice_client.source, 1)
             while ctx.voice_client.is_playing() or ctx.voice_client.is_paused():
                 await asyncio.sleep(0.1)
-            self.play_next_song()
+            await self.play_next_song()
 
         else:
             if ctx.voice_client:
